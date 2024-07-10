@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.login.LoginComponent">
+
+    <ImageView
+        android:id="@+id/login_image"
+        android:layout_width="match_parent"
+        android:layout_height="285sp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        android:alpha="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/logo_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/login_image"
+        app:layout_constraintBottom_toTopOf="@id/welcome_back_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/logo_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/logo"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/brand_name"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/welcome_back_label"
+        android:layout_width="304sp"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_back_label"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/login_image"
+        app:layout_constraintEnd_toEndOf="@id/login_image"
+        app:layout_constraintStart_toStartOf="@id/login_image"
+        app:layout_constraintBottom_toBottomOf="@id/login_image"/>
+
+    <TextView
+        android:id="@+id/please_login_to_continue_label"
+        android:layout_width="200sp"
+        android:layout_height="22sp"
+        android:text="@string/please_login_to_continue_label"
+        android:textColor="@color/gray_800"
+        app:layout_constraintBottom_toTopOf="@id/login_information_container"
+        app:layout_constraintStart_toStartOf="@id/login_information_container"
+        app:layout_constraintTop_toBottomOf="@id/login_image" />
+
+    <LinearLayout
+        android:id="@+id/login_information_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/login_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_image">
+
+        <LinearLayout
+            android:id="@+id/input_email_container"
+            android:layout_width="325sp"
+            android:layout_height="65sp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/email_label"
+                android:layout_width="87sp"
+                android:layout_height="22sp"
+                android:text="@string/email_address_label"
+                android:textColor="@color/gray_800"
+                android:textSize="13sp"/>
+
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_hint"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/forgot_password_label"
+            android:layout_width="wrap_content"
+            android:layout_height="22sp"
+            android:text="@string/forgot_password_btn"
+            android:textAlignment="textEnd"
+            android:textColor="@color/gray_800"
+            android:layout_gravity="end"/>
+
+        <LinearLayout
+            android:id="@+id/input_password_container"
+            android:layout_width="325sp"
+            android:layout_height="65sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/password_label"
+                android:layout_width="87sp"
+                android:layout_height="22sp"
+                android:textSize="13sp"
+                android:textColor="@color/gray_800"
+                android:text="@string/password_label" />
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="325sp"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/remember_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remember_me_label"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="325sp"
+        android:layout_height="50sp"
+        android:backgroundTint="@color/elf_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_information_container"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_container"
+        android:text="@string/login_btn"/>
+    <LinearLayout
+        android:id="@+id/sign_up_container"
+        android:layout_width="174sp"
+        android:layout_height="45sp"
+        app:layout_constraintTop_toBottomOf="@id/login_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/new_to_scratch_label"
+            android:layout_width="173sp"
+            android:layout_height="22sp"
+            android:text="@string/new_to_movie_label"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            app:layout_constraintTop_toBottomOf="@id/input_email_container"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/create_account_btn"
+            android:layout_width="167sp"
+            android:layout_height="18sp"
+            android:text="@string/create_account_btn"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textColor="@color/elf_green"
+            app:layout_constraintTop_toBottomOf="@id/input_email_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

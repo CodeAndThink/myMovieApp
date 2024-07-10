@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.mainscreen.profile.options.InforComponent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/top_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                android:backgroundTint="@color/white"
+                android:scaleType="centerInside"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/user_information_label"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"/>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/top_app_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp"
+        android:background="@color/transparent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="5dp">
+
+                <TextView
+                    style="@style/small_box"
+                    android:text="@string/display_name_label"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/display_name_box"
+                    style="@style/small_box"
+                    android:layout_width="match_parent"
+                    android:text="@string/display_name_label"
+                    android:background="@drawable/edit_text_border"
+                    android:enabled="false"/>
+
+                <TextView
+                    style="@style/small_box"
+                    android:text="@string/email_label"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/email_box"
+                    style="@style/small_box"
+                    android:layout_width="match_parent"
+                    android:text="@string/email_label"
+                    android:background="@drawable/edit_text_border"
+                    android:enabled="false"/>
+
+                <TextView
+                    style="@style/small_box"
+                    android:text="@string/dob_label"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/dob_box"
+                    style="@style/small_box"
+                    android:layout_width="match_parent"
+                    android:text="@string/dob_label"
+                    android:background="@drawable/edit_text_border"
+                    android:enabled="false"/>
+
+                <TextView
+                    style="@style/small_box"
+                    android:text="@string/gender_label"
+                    android:textStyle="bold"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/male_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/male_label"
+                        style="@style/small_box"/>
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/female_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female_label"
+                        style="@style/small_box"/>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/small_box"
+                    android:text="@string/address_label"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/address_box"
+                    style="@style/small_box"
+                    android:layout_width="match_parent"
+                    android:text="@string/address_label"
+                    android:background="@drawable/edit_text_border"
+                    android:enabled="false"/>
+
+                <TextView
+                    style="@style/small_box"
+                    android:text="@string/phone_label"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/phone_box"
+                    style="@style/small_box"
+                    android:layout_width="match_parent"
+                    android:text="@string/phone_label"
+                    android:background="@drawable/edit_text_border"
+                    android:enabled="false"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/change_information_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:src="@drawable/baseline_create_24"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"/>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/change_information_apply_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:src="@drawable/baseline_save_as_24"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

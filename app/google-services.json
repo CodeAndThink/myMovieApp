@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "902143241116",
+    "project_id": "mymovie-24716",
+    "storage_bucket": "mymovie-24716.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902143241116:android:87100ea7c7633df0707659",
+        "android_client_info": {
+          "package_name": "com.truong.movieapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902143241116-rcdsm9hia05j6a66hngpnmn2cuji5v71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUoSHRduk9KcpyH3rrtVEqTWXK63YfkyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902143241116-rcdsm9hia05j6a66hngpnmn2cuji5v71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

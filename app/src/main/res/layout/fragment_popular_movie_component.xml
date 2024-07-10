@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="550sp"
+    tools:context=".home.PopularMovieComponent">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/popular_movie_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/popular_movie_item"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/medium_label_style"
+            android:text="@string/popular_movies_label" />
+        <ImageButton
+            android:id="@+id/see_more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_right_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
+            android:elevation="5dp"/>
+    </RelativeLayout>
+
+</FrameLayout>
