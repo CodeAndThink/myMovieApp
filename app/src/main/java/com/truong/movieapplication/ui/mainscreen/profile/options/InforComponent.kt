@@ -1,24 +1,17 @@
 package com.truong.movieapplication.ui.mainscreen.profile.options
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.text.set
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.truong.movieapplication.data.connections.local.UserDatabase
-import com.truong.movieapplication.data.models.User
-import com.truong.movieapplication.data.respository.FirebaseAuthService
+import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
-import com.truong.movieapplication.data.respository.SharedReferencesHelper
 import com.truong.movieapplication.databinding.FragmentInforComponentBinding
 import com.truong.movieapplication.ui.login.LoginViewModel
 import com.truong.movieapplication.ui.login.LoginViewModelFactory
-import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModel
 
 class InforComponent : Fragment() {
     private lateinit var _binding: FragmentInforComponentBinding
@@ -40,7 +33,7 @@ class InforComponent : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dao = UserDatabase.getDatabase(requireContext()).userDao()
-        val factory = LoginViewModelFactory(LoginRepository(FirebaseAuthService(), dao))
+        val factory = LoginViewModelFactory(LoginRepository(FirebaseService(), dao))
         loginViewModel = ViewModelProvider(requireActivity(), factory)[LoginViewModel::class.java]
         loginViewModel.user.observe(requireActivity()) {
             val user = it.getOrNull()

@@ -3,9 +3,13 @@ package com.truong.movieapplication.data.respository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.truong.movieapplication.data.connections.network.AuthServices
+import com.truong.movieapplication.data.models.Message
 import com.truong.movieapplication.data.models.User
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
-class FirebaseAuthService : AuthServices {
+class FirebaseService : AuthServices {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -129,5 +133,34 @@ class FirebaseAuthService : AuthServices {
 
     override fun logout(callback: (Boolean, String?) -> Unit) {
 
+    }
+
+    override suspend fun getMessage(): List<Message> = suspendCancellableCoroutine { continuation ->
+        firestore.collection("messages")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val messages = querySnapshot.documents.mapNotNull {
+                        val messageData = it.data
+                        if (messageData != null) {
+                            val id = it.id
+                            val title = messageData["title"]?.toString() ?: ""
+                            val message = messageData["message"]?.toString() ?: ""
+                            val type = messageData["type"]?.toString()?.toIntOrNull() ?: 0
+                            val date = messageData["date"]?.toString() ?: ""
+
+                            Message(id, title, message, type, date)
+                        } else {
+                            null
+                        }
+                    }
+                    continuation.resume(messages)
+                } else {
+                    continuation.resume(emptyList())
+                }
+            }
+            .addOnFailureListener { e ->
+                continuation.resumeWithException(e)
+            }
     }
 }

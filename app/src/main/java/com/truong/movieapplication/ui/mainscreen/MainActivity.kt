@@ -5,12 +5,11 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.connections.network.ApiClients
-import com.truong.movieapplication.data.respository.FirebaseAuthService
+import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
 import com.truong.movieapplication.data.respository.MovieRepository
 import com.truong.movieapplication.data.respository.SharedReferencesHelper
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         val preferencesHelper = SharedReferencesHelper(this)
         val dao = UserDatabase.getDatabase(this).userDao()
-        val loginRepository = LoginRepository(FirebaseAuthService(), dao, preferencesHelper)
+        val loginRepository = LoginRepository(FirebaseService(), dao, preferencesHelper)
         loginViewModelFactory = LoginViewModelFactory(loginRepository)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory)[LoginViewModel::class.java]
 
@@ -109,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.fetchNowPlayingMovie()
         loginViewModel.getUserData(email)
         loginViewModel.saveUserEmail(email)
+        loginViewModel.fetchMessages()
 
         mainViewModel.errorMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

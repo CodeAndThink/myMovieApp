@@ -1,60 +1,61 @@
 package com.truong.movieapplication.ui.mainscreen.notification
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.truong.movieapplication.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.truong.movieapplication.adapters.MessageAdapter
+import com.truong.movieapplication.data.connections.local.UserDatabase
+import com.truong.movieapplication.data.respository.FirebaseService
+import com.truong.movieapplication.data.respository.LoginRepository
+import com.truong.movieapplication.databinding.FragmentNotificationComponentBinding
+import com.truong.movieapplication.ui.login.LoginViewModel
+import com.truong.movieapplication.ui.login.LoginViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NotificationComponent.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NotificationComponent : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var _binding: FragmentNotificationComponentBinding
+    private val binding get() = _binding
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification_component, container, false)
+    ): View {
+        _binding = FragmentNotificationComponentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val dao = UserDatabase.getDatabase(requireContext()).userDao()
+        val factory = LoginViewModelFactory(LoginRepository(FirebaseService(), dao))
+        loginViewModel = ViewModelProvider(requireActivity(), factory)[LoginViewModel::class.java]
+
+        loginViewModel.messages.observe(viewLifecycleOwner) { messages ->
+            binding.messageList.adapter = MessageAdapter(messages)
+        }
+
+        binding.messageList.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.backBtn.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loginViewModel.fetchMessages()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NotificationComponent.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NotificationComponent().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = NotificationComponent()
     }
 }

@@ -1,5 +1,6 @@
 package com.truong.movieapplication.data.connections.network
 
+import com.truong.movieapplication.data.models.Message
 import com.truong.movieapplication.data.models.User
 
 interface AuthServices {
@@ -10,4 +11,5 @@ interface AuthServices {
     fun updateWishList(email: String, wishList: List<Long>, callback: (Boolean, String?) -> Unit)
     fun changePassword(oldPassword: String, newPassword: String, callback: (Boolean, String?) -> Unit)
     fun logout(callback: (Boolean, String?) -> Unit)
+    suspend fun getMessage(): List<Message>
 }

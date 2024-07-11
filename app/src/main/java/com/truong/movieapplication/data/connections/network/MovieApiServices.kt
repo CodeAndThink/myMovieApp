@@ -10,7 +10,7 @@ import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ApiServices {
+interface MovieApiServices {
     @GET("3/movie/popular")
     fun getPopularMovies(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,

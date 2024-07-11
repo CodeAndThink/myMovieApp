@@ -1,14 +1,9 @@
 package com.truong.movieapplication.ui.mainscreen.profile
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.truong.movieapplication.R
 import com.truong.movieapplication.adapters.ProfileOptionAdapter
 import com.truong.movieapplication.data.connections.local.UserDatabase
-import com.truong.movieapplication.data.respository.FirebaseAuthService
+import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
 import com.truong.movieapplication.databinding.FragmentProfileComponentBinding
 import com.truong.movieapplication.ui.login.LoginActivity
@@ -24,6 +19,7 @@ import com.truong.movieapplication.ui.login.LoginViewModel
 import com.truong.movieapplication.ui.login.LoginViewModelFactory
 import com.truong.movieapplication.ui.mainscreen.profile.options.InforComponent
 import com.truong.movieapplication.ui.mainscreen.profile.options.Settings
+import com.truong.movieapplication.ui.mainscreen.profile.options.SettingsComponent
 import com.truong.movieapplication.ui.mainscreen.profile.options.WishListComponent
 
 class ProfileComponent : Fragment() {
@@ -44,7 +40,7 @@ class ProfileComponent : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val dao = UserDatabase.getDatabase(requireContext()).userDao()
-        val factory = LoginViewModelFactory(LoginRepository(FirebaseAuthService(), dao))
+        val factory = LoginViewModelFactory(LoginRepository(FirebaseService(), dao))
         loginViewModel = ViewModelProvider(requireActivity(), factory)[LoginViewModel::class.java]
 
         val adapter = ProfileOptionAdapter(Settings.OPTIONS)
@@ -76,6 +72,12 @@ class ProfileComponent : Fragment() {
                                 .commit()
                         }
                         3 -> {
+                            requireActivity().supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, SettingsComponent())
+                                .addToBackStack(null)
+                                .commit()
+                        }
+                        4 -> {
                             val logoutIntent = Intent(requireContext(), LoginActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }

@@ -2,6 +2,7 @@ package com.truong.movieapplication.data.respository
 
 import com.truong.movieapplication.data.connections.local.UserDAO
 import com.truong.movieapplication.data.connections.network.AuthServices
+import com.truong.movieapplication.data.models.Message
 import com.truong.movieapplication.data.models.User
 
 class LoginRepository {
@@ -55,6 +56,14 @@ class LoginRepository {
 
     fun getEmail(): String? {
         return sharedReferencesHelper.getString("email")
+    }
+
+    suspend fun getMessage(): List<Message> {
+        return try {
+            authServices.getMessage()
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     fun getAllUsers(): List<User> {

@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.local.UserDatabase
-import com.truong.movieapplication.data.respository.FirebaseAuthService
+import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
 import com.truong.movieapplication.data.respository.SharedReferencesHelper
 import com.truong.movieapplication.databinding.FragmentForgotComponentBinding
@@ -35,7 +34,7 @@ class ForgotComponent : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val preferencesHelper = SharedReferencesHelper(requireContext())
         val dao = UserDatabase.getDatabase(requireContext()).userDao()
-        val repository = LoginRepository(FirebaseAuthService(), dao, preferencesHelper)
+        val repository = LoginRepository(FirebaseService(), dao, preferencesHelper)
         val factory = LoginViewModelFactory(repository)
         authViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 

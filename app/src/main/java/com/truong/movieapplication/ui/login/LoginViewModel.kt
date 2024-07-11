@@ -12,8 +12,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.truong.movieapplication.data.models.Message
 import com.truong.movieapplication.data.models.User
 import com.truong.movieapplication.data.respository.LoginRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
     private val _loginResult = MutableLiveData<Boolean>()
@@ -37,6 +42,9 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _isTimeExceeded = MutableLiveData<Boolean>(false)
     val isTimeExceeded: LiveData<Boolean> get() = _isTimeExceeded
 
+    private val _messages = MutableLiveData<List<Message>>()
+    val messages: LiveData<List<Message>> get() = _messages
+
     private var countDownTimer: CountDownTimer? = null
 
     fun login(email: String, password: String) {
@@ -47,6 +55,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             } else {
                 _errorMessage.value = "Login failed: $error"
             }
+        }
+    }
+
+    fun fetchMessages() {
+        viewModelScope.launch {
+            val result = loginRepository.getMessage()
+            _messages.postValue(result)
         }
     }
 

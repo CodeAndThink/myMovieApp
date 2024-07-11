@@ -1,23 +1,21 @@
 package com.truong.movieapplication.ui.mainscreen
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.truong.movieapplication.data.connections.local.UserDAO
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.connections.network.ApiClients
 import com.truong.movieapplication.data.connections.network.Base
 import com.truong.movieapplication.data.models.Movie
-import com.truong.movieapplication.data.respository.FirebaseAuthService
+import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
 import com.truong.movieapplication.data.respository.MovieRepository
 import com.truong.movieapplication.data.respository.SharedReferencesHelper
-import com.truong.movieapplication.databinding.ActivityMovieDetailUsingRelativeLayoutBinding
+import com.truong.movieapplication.databinding.ActivityMovieDetailBinding
 import com.truong.movieapplication.ui.login.LoginViewModel
 import com.truong.movieapplication.ui.login.LoginViewModelFactory
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModel
@@ -25,7 +23,7 @@ import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModelFactory
 
 class MovieDetailActivity : AppCompatActivity() {
 
-    private lateinit var _binding: ActivityMovieDetailUsingRelativeLayoutBinding
+    private lateinit var _binding: ActivityMovieDetailBinding
     private val binding get() = _binding
     private val apiService = ApiClients.dataInstance
     private val repository = MovieRepository(apiService)
@@ -35,17 +33,16 @@ class MovieDetailActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(repository)
     }
-    private val TAG = "MovieDetailActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        _binding = ActivityMovieDetailUsingRelativeLayoutBinding.inflate(layoutInflater)
+        _binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val preferencesHelper = SharedReferencesHelper(this)
         val dao = UserDatabase.getDatabase(this).userDao()
-        val loginRepository = LoginRepository(FirebaseAuthService(), dao, preferencesHelper)
+        val loginRepository = LoginRepository(FirebaseService(), dao, preferencesHelper)
         loginViewModelFactory = LoginViewModelFactory(loginRepository)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory)[LoginViewModel::class.java]
 

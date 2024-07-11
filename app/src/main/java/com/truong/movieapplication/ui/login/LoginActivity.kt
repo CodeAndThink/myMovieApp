@@ -1,13 +1,12 @@
 package com.truong.movieapplication.ui.login
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.local.UserDatabase
-import com.truong.movieapplication.data.respository.FirebaseAuthService
+import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
 import com.truong.movieapplication.data.respository.SharedReferencesHelper
 import com.truong.movieapplication.databinding.ActivityLoginBinding
@@ -26,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
         val preferencesHelper = SharedReferencesHelper(this)
         val dao = UserDatabase.getDatabase(this).userDao()
-        val repository = LoginRepository(FirebaseAuthService(), dao, preferencesHelper)
+        val repository = LoginRepository(FirebaseService(), dao, preferencesHelper)
         val factory = LoginViewModelFactory(repository)
         authViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
