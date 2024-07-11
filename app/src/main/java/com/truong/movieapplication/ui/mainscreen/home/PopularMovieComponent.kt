@@ -15,7 +15,7 @@ import com.truong.movieapplication.databinding.FragmentPopularMovieComponentBind
 import com.truong.movieapplication.ui.mainscreen.MovieDetailActivity
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModel
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModelFactory
-import com.truong.movieapplication.adapters.PopularMovieAdapter
+import com.truong.movieapplication.ui.adapters.PopularMovieAdapter
 
 class PopularMovieComponent : Fragment() {
     private lateinit var _binding: FragmentPopularMovieComponentBinding

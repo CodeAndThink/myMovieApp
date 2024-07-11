@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.truong.movieapplication.adapters.TopRateMovieAdapter
+import com.truong.movieapplication.ui.adapters.TopRateMovieAdapter
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.connections.network.ApiClients
 import com.truong.movieapplication.data.respository.FirebaseService

@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/black"
         android:padding="5sp">
         <ImageView
             android:id="@+id/movie_small_pic"
@@ -22,13 +21,11 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
             android:text="@string/sample_text"/>
         <TextView
             android:id="@+id/movie_small_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:textSize="15sp"
             android:text="@string/sample_text"/>
     </LinearLayout>

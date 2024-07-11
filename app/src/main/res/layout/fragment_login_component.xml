@@ -155,6 +155,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_information_container"
         app:layout_constraintBottom_toTopOf="@id/sign_up_container"
+        android:elevation="5dp"
         android:text="@string/login_btn"/>
     <LinearLayout
         android:id="@+id/sign_up_container"

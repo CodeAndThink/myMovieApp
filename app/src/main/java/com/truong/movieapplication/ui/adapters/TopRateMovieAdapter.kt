@@ -1,4 +1,4 @@
-package com.truong.movieapplication.adapters
+package com.truong.movieapplication.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View

@@ -12,7 +12,7 @@ import com.truong.movieapplication.R
 import com.truong.movieapplication.data.models.Movie
 import com.truong.movieapplication.databinding.FragmentTopRateComponentBinding
 import com.truong.movieapplication.ui.mainscreen.MovieDetailActivity
-import com.truong.movieapplication.adapters.TopRateMovieAdapter
+import com.truong.movieapplication.ui.adapters.TopRateMovieAdapter
 import com.truong.movieapplication.data.connections.network.ApiClients
 import com.truong.movieapplication.data.respository.MovieRepository
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModel

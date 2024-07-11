@@ -1,4 +1,4 @@
-package com.truong.movieapplication.adapters
+package com.truong.movieapplication.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,9 @@ import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.network.Base
 import com.truong.movieapplication.data.models.Movie
 
-class SearchResultAdapter : ListAdapter<Movie, SearchResultAdapter.MovieViewHolder>(MovieDiffCallback()) {
+class SearchResultAdapter : ListAdapter<Movie, SearchResultAdapter.MovieViewHolder>(
+    MovieDiffCallback()
+) {
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

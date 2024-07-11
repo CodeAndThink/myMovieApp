@@ -84,4 +84,12 @@ dependencies {
     implementation (libs.kotlin.reflect)
 
     //Dagger
+
+    //Test
+    testImplementation(libs.mockk.v11311)
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit)
 }

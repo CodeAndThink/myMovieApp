@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.truong.movieapplication.adapters.SearchResultAdapter
+import com.truong.movieapplication.ui.adapters.SearchResultAdapter
 import com.truong.movieapplication.data.connections.network.ApiClients
 import com.truong.movieapplication.data.models.Movie
 import com.truong.movieapplication.data.respository.MovieRepository

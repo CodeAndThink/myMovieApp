@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.truong.movieapplication.adapters.MessageAdapter
+import com.truong.movieapplication.ui.adapters.MessageAdapter
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository

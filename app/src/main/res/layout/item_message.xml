@@ -22,15 +22,6 @@
             android:src="@mipmap/ic_launcher_round"
             android:layout_margin="5dp"/>
 
-        <ImageView
-            android:id="@+id/message_next_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_right_24"/>
-
         <TextView
             android:id="@+id/message_title"
             android:layout_width="wrap_content"
@@ -38,10 +29,10 @@
             android:text="@string/sample_text"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:maxLines="1"
+            android:maxLines="2"
             app:layout_constraintStart_toEndOf="@id/message_image"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/message_next_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

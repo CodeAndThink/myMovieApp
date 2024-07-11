@@ -7,8 +7,7 @@
     android:layout_margin="5dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/thunder">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/movie_result_title"
             android:layout_width="0dp"
@@ -19,7 +18,6 @@
             app:layout_constraintEnd_toStartOf="@id/movie_result_image"
             app:layout_constraintHorizontal_weight="1"
             android:textSize="18sp"
-            android:textColor="@color/white"
             android:textStyle="bold"
             android:text="@string/sample_movie_name"/>
         <ImageView

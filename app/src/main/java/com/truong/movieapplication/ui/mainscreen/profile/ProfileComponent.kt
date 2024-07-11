@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.truong.movieapplication.R
-import com.truong.movieapplication.adapters.ProfileOptionAdapter
+import com.truong.movieapplication.ui.adapters.ProfileOptionAdapter
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
