@@ -40,16 +40,22 @@ class MovieDetailActivity : AppCompatActivity() {
         _binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainViewModel.fetchMovieGenre()
+
         val preferencesHelper = SharedReferencesHelper(this)
         val dao = UserDatabase.getDatabase(this).userDao()
         val loginRepository = LoginRepository(FirebaseService(), dao, preferencesHelper)
         loginViewModelFactory = LoginViewModelFactory(loginRepository)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory)[LoginViewModel::class.java]
 
-        movie = intent.getParcelableExtra<Movie>("movie")!!
+        movie = intent.getParcelableExtra("movie")!!
         binding.movieDetailName.text = movie.title
         binding.movieDetailYear.text = "(${movie.release_date!!.substring(0, 4)})"
-        /*binding.movieDetailCategories.text = movie.!!.joinToString(", ")*/
+        mainViewModel.genreMovies.observe(this) { genres ->
+            binding.movieDetailCategories.text = movie.genre_ids?.joinToString(" | ") { genreId ->
+                genres.find { it.id == genreId }?.name ?: ""
+            } ?: ""
+        }
         binding.movieDetailRating.rating = movie.vote_average / 2
         binding.movieDetailContext.text = movie.overview
         Glide.with(this).load(Base.IMAGE_URL + Base.SIZE + movie.poster_path).into(binding.movieDetailMiniPic)
@@ -97,7 +103,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         mainViewModel.errorMessage.removeObservers(this)
         mainViewModel.movieTrailer.removeObservers(this)
-
+        mainViewModel.genreMovies.removeObservers(this)
         loginViewModel.errorMessage.removeObservers(this)
     }
 }

@@ -1,5 +1,6 @@
 package com.truong.movieapplication.ui.mainscreen.profile.options
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.truong.movieapplication.ui.adapters.TopRateMovieAdapter
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.connections.network.ApiClients
+import com.truong.movieapplication.data.models.Movie
 import com.truong.movieapplication.data.respository.FirebaseService
 import com.truong.movieapplication.data.respository.LoginRepository
 import com.truong.movieapplication.data.respository.MovieRepository
 import com.truong.movieapplication.databinding.FragmentWishListComponentBinding
 import com.truong.movieapplication.ui.login.LoginViewModel
 import com.truong.movieapplication.ui.login.LoginViewModelFactory
+import com.truong.movieapplication.ui.mainscreen.MovieDetailActivity
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModel
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModelFactory
 
@@ -63,11 +66,29 @@ class WishListComponent : Fragment() {
             }
         }
 
+        val adapter = TopRateMovieAdapter(emptyList())
+        binding.movieWishListRecyclerView.adapter = adapter
+        binding.movieWishListRecyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
+
         mainViewModel.wishList.observe(viewLifecycleOwner) { movies ->
-            val adapter = TopRateMovieAdapter(movies)
-            binding.movieWishListRecyclerView.adapter = adapter
-            binding.movieWishListRecyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
+            adapter.updateList(movies)
         }
+
+        adapter.setOnClickListener(object : TopRateMovieAdapter.OnClickListener {
+            override fun onClick(position: Int, movie: Movie) {
+                val openMovieDetailIntent = Intent(requireActivity(), MovieDetailActivity::class.java)
+                openMovieDetailIntent.putExtra("movie", movie)
+                openMovieDetailIntent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                startActivity(openMovieDetailIntent)
+            }
+        })
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        loginViewModel.user.removeObservers(viewLifecycleOwner)
+        mainViewModel.wishList.removeObservers(viewLifecycleOwner)
     }
 
     companion object {

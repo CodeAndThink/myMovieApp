@@ -1,5 +1,6 @@
 package com.truong.movieapplication.data.connections.network
 
+import com.truong.movieapplication.data.models.ListMovieGenre
 import com.truong.movieapplication.data.models.Movie
 import com.truong.movieapplication.data.models.MoviePage
 import com.truong.movieapplication.data.models.TrailerMovie
@@ -38,6 +39,12 @@ interface MovieApiServices {
         @Query("language") language: String = Base.LANGUAGE,
         @Query("page") page: Long = Base.PAGE
     ): Call<MoviePage>
+
+    @GET("3/genre/movie/list")
+    fun getGenreMovies(
+        @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
+        @Query("language") language: String = Base.LANGUAGE
+    ): Call<ListMovieGenre>
 
     @GET("3/movie/{movie_id}")
     fun getMovieDetails(

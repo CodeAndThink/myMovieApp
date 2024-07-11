@@ -11,6 +11,7 @@ data class Movie(
     @PrimaryKey
     val id: Long,
     @ColumnInfo(name = "title")val title: String ?,
+    @ColumnInfo(name = "genre_ids")val genre_ids: List<Long>? = null,
     @ColumnInfo(name = "poster_path")val poster_path: String?,
     @ColumnInfo(name = "overview")val overview: String?,
     @ColumnInfo(name = "release_date")val release_date: String?,
@@ -26,6 +27,7 @@ data class Movie(
     constructor(parcel: Parcel) : this (
         parcel.readLong(),
         parcel.readString(),
+        parcel.createLongArray()?.toList(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -47,6 +49,7 @@ data class Movie(
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id)
         dest.writeString(title)
+        dest.writeLongArray(genre_ids?.toLongArray())
         dest.writeString(poster_path)
         dest.writeString(overview)
         dest.writeString(release_date)

@@ -15,7 +15,8 @@
         android:layout_height="wrap_content">
         <TextView
             style="@style/medium_label_style"
-            android:text="@string/popular_movies_label" />
+            android:text="@string/popular_movies_label"
+            android:elevation="10dp"/>
         <ImageButton
             android:id="@+id/see_more_button"
             android:layout_width="wrap_content"
@@ -24,7 +25,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:backgroundTint="@color/white"
-            android:elevation="5dp"/>
+            android:elevation="10dp"/>
     </RelativeLayout>
 
 </FrameLayout>

@@ -11,7 +11,7 @@ import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.network.Base
 import com.truong.movieapplication.data.models.Movie
 
-class TopRateMovieAdapter(private val mList: List<Movie>) : RecyclerView.Adapter<TopRateMovieAdapter.ViewHolder>(){
+class TopRateMovieAdapter(private var mList: List<Movie>) : RecyclerView.Adapter<TopRateMovieAdapter.ViewHolder>(){
 
     private var onClickListener: OnClickListener? = null
 
@@ -39,6 +39,11 @@ class TopRateMovieAdapter(private val mList: List<Movie>) : RecyclerView.Adapter
 
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    fun updateList(newList: List<Movie>) {
+        mList = newList
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

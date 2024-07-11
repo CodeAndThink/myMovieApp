@@ -1,9 +1,12 @@
 package com.truong.movieapplication.ui.mainscreen.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.truong.movieapplication.data.models.ListMovieGenre
 import com.truong.movieapplication.data.models.Movie
+import com.truong.movieapplication.data.models.MovieGenre
 import com.truong.movieapplication.data.models.MoviePage
 import com.truong.movieapplication.data.models.TrailerDetail
 import com.truong.movieapplication.data.models.TrailerMovie
@@ -41,6 +44,9 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private val _movieTrailer = MutableLiveData<List<TrailerDetail>>()
     val movieTrailer: LiveData<List<TrailerDetail>> get() = _movieTrailer
+
+    private val _genreMovies = MutableLiveData<List<MovieGenre>>()
+    val genreMovies: LiveData<List<MovieGenre>> get() = _genreMovies
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
@@ -138,6 +144,23 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<TrailerMovie>, t: Throwable) {
+                _errorMessage.value = t.message
+            }
+        })
+    }
+
+    fun fetchMovieGenre() {
+        repository.getGenreMovies().enqueue(object : Callback<ListMovieGenre> {
+            override fun onResponse(call: Call<ListMovieGenre>, response: Response<ListMovieGenre>) {
+                if (response.isSuccessful) {
+                    _genreMovies.value = response.body()?.genres
+                    Log.d(TAG, "Genre: ${response.body()?.genres}")
+                } else {
+                    _errorMessage.value = "Failed to fetch movie's genre"
+                }
+            }
+
+            override fun onFailure(call: Call<ListMovieGenre>, t: Throwable) {
                 _errorMessage.value = t.message
             }
         })

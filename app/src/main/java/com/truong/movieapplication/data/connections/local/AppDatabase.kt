@@ -6,10 +6,13 @@ import androidx.room.DatabaseConfiguration
 import androidx.room.InvalidationTracker
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteOpenHelper
+import com.truong.movieapplication.data.models.Converters
 import com.truong.movieapplication.data.models.Movie
 
 @Database(entities = [Movie::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun MovieDAO(): MovieDAO
 

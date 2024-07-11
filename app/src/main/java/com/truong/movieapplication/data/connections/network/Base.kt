@@ -1,6 +1,7 @@
 package com.truong.movieapplication.data.connections.network
 
 object Base {
+    const val API_KEY = "f8a716cb151ec10828e121a80305f51e"
     const val BASE_URL = "https://api.themoviedb.org/"
     const val LANGUAGE = "en-US"
     const val PAGE : Long = 1

@@ -1,6 +1,7 @@
 package com.truong.movieapplication.data.respository
 
 import com.truong.movieapplication.data.connections.network.MovieApiServices
+import com.truong.movieapplication.data.models.ListMovieGenre
 import com.truong.movieapplication.data.models.Movie
 import com.truong.movieapplication.data.models.MoviePage
 import com.truong.movieapplication.data.models.TrailerMovie
@@ -33,5 +34,9 @@ class MovieRepository(private val movieApiServices: MovieApiServices) {
 
     fun getMovieDetails(movieId: Long): Call<Movie> {
         return movieApiServices.getMovieDetails(movieId)
+    }
+
+    fun getGenreMovies() : Call<ListMovieGenre> {
+        return movieApiServices.getGenreMovies()
     }
 }

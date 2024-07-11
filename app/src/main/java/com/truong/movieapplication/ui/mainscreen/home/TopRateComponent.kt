@@ -34,21 +34,25 @@ class TopRateComponent : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val factory = MainViewModelFactory(MovieRepository(ApiClients.dataInstance))
-        mainViewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), factory)[MainViewModel::class.java]
+
+        val adapter = TopRateMovieAdapter(emptyList())
+        binding.topMovieRecycleView.adapter = adapter
+        binding.topMovieRecycleView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+
         mainViewModel.topRatedMovies.observe(viewLifecycleOwner) { movies ->
-            binding.topMovieRecycleView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-            val adapter = TopRateMovieAdapter(movies)
-            binding.topMovieRecycleView.adapter = adapter
-            adapter.setOnClickListener(object :
-                TopRateMovieAdapter.OnClickListener {
-                override fun onClick(position: Int, movie: Movie) {
-                    val openMovieDetailIntent = Intent(requireActivity(), MovieDetailActivity::class.java)
-                    openMovieDetailIntent.putExtra("movie", movie)
-                    openMovieDetailIntent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-                    startActivity(openMovieDetailIntent)
-                }
-            })
+            adapter.updateList(movies)
         }
+
+        adapter.setOnClickListener(object :
+            TopRateMovieAdapter.OnClickListener {
+            override fun onClick(position: Int, movie: Movie) {
+                val openMovieDetailIntent = Intent(requireActivity(), MovieDetailActivity::class.java)
+                openMovieDetailIntent.putExtra("movie", movie)
+                openMovieDetailIntent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                startActivity(openMovieDetailIntent)
+            }
+        })
     }
 
     companion object {

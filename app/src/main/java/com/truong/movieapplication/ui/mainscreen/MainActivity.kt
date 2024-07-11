@@ -106,6 +106,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.fetchTopRateMovie()
         mainViewModel.fetchUpcomingMovie()
         mainViewModel.fetchNowPlayingMovie()
+        mainViewModel.fetchMovieGenre()
+
         loginViewModel.getUserData(email)
         loginViewModel.saveUserEmail(email)
         loginViewModel.fetchMessages()
