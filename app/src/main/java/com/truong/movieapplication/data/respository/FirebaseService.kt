@@ -123,6 +123,10 @@ class FirebaseService : AuthServices {
             }
     }
 
+    override fun deleteWishListByMovieId(email: String, wishList: List<Long>, callback: (Boolean, String?) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun changePassword(
         oldPassword: String,
         newPassword: String,

@@ -53,7 +53,7 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private var TAG = "MainViewModel"
 
-    fun getMoviesDetails(movieIds: List<Long>) {
+    fun setWishList(movieIds: List<Long>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val movieCalls = movieIds.map { movieId ->

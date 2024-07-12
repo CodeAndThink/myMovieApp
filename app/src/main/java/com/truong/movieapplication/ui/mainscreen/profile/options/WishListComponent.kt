@@ -2,6 +2,7 @@ package com.truong.movieapplication.ui.mainscreen.profile.options
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,8 @@ class WishListComponent : Fragment() {
     private val binding get() = _binding
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var mainViewModel: MainViewModel
+    private val adapter = TopRateMovieAdapter(emptyList())
+    private val TAG = "WishListComponent"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,17 @@ class WishListComponent : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        loginViewModel.getUserData(loginViewModel.getUserEmail()!!)
+        Log.d(TAG, "onStart: ")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,11 +75,10 @@ class WishListComponent : Fragment() {
         loginViewModel.user.observe(viewLifecycleOwner) {
             val user = it.getOrNull()
             if (user != null) {
-                mainViewModel.getMoviesDetails(user.wish_list!!)
+                mainViewModel.setWishList(user.wish_list!!)
             }
         }
 
-        val adapter = TopRateMovieAdapter(emptyList())
         binding.movieWishListRecyclerView.adapter = adapter
         binding.movieWishListRecyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
 
@@ -86,9 +98,7 @@ class WishListComponent : Fragment() {
 
     override fun onStop() {
         super.onStop()
-
-        loginViewModel.user.removeObservers(viewLifecycleOwner)
-        mainViewModel.wishList.removeObservers(viewLifecycleOwner)
+        Log.d(TAG, "onStop: ")
     }
 
     companion object {

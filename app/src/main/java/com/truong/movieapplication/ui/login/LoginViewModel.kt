@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.CountDownTimer
 import android.provider.MediaStore
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,9 +15,7 @@ import androidx.lifecycle.viewModelScope
 import com.truong.movieapplication.data.models.Message
 import com.truong.movieapplication.data.models.User
 import com.truong.movieapplication.data.respository.LoginRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
     private val _loginResult = MutableLiveData<Boolean>()
@@ -46,6 +43,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val messages: LiveData<List<Message>> get() = _messages
 
     private var countDownTimer: CountDownTimer? = null
+
+    private val TAG = "LoginViewModel"
 
     fun login(email: String, password: String) {
         loginRepository.login(email, password) { success, user, error ->
@@ -131,6 +130,29 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     }
                 } else {
                     _errorMessage.value = "Item already exists in the wish list"
+                }
+            } else {
+                _errorMessage.value = "Get user data failed: $error"
+            }
+        }
+    }
+
+    fun removeFromWishList(email: String, itemId: Long) {
+        loginRepository.getUserData(email) { success, user, error ->
+            if (success && user != null) {
+                val currentWishList: MutableList<Long> = user.wish_list?.map { it }?.toMutableList() ?: mutableListOf()
+                if (currentWishList.contains(itemId)) {
+                    currentWishList.remove(itemId)
+                    loginRepository.updateWishList(email, currentWishList) { updateSuccess, updateError ->
+                        if (updateSuccess) {
+                            _user.value = Result.success(user.apply { wish_list = currentWishList })
+                            _errorMessage.value = "Item removed from wish list"
+                            } else {
+                            _errorMessage.value = "Update wish list failed: $updateError"
+                        }
+                    }
+                } else {
+                    _errorMessage.value = "Item not found in the wish list"
                 }
             } else {
                 _errorMessage.value = "Get user data failed: $error"

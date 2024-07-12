@@ -9,6 +9,7 @@ interface AuthServices {
     fun getUserData(email: String, callback: (Boolean, User?, String?) -> Unit)
     fun updateUserData(user: User, callback: (Boolean, String?) -> Unit)
     fun updateWishList(email: String, wishList: List<Long>, callback: (Boolean, String?) -> Unit)
+    fun deleteWishListByMovieId(email: String, wishList: List<Long>, callback: (Boolean, String?) -> Unit)
     fun changePassword(oldPassword: String, newPassword: String, callback: (Boolean, String?) -> Unit)
     fun logout(callback: (Boolean, String?) -> Unit)
     suspend fun getMessage(): List<Message>

@@ -69,6 +69,7 @@ class LoginComponent : Fragment() {
                     intent.putExtra("email", binding.inputEmail.text.toString())
                     intent.putExtra("password", binding.inputPassword.text.toString())
                     startActivity(intent)
+                    requireActivity().finish()
                 } else {
                     authViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
                         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()

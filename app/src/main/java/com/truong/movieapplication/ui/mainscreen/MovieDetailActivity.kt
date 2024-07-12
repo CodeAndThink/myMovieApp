@@ -1,5 +1,6 @@
 package com.truong.movieapplication.ui.mainscreen
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -7,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.connections.network.ApiClients
 import com.truong.movieapplication.data.connections.network.Base
@@ -40,13 +42,14 @@ class MovieDetailActivity : AppCompatActivity() {
         _binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel.fetchMovieGenre()
-
         val preferencesHelper = SharedReferencesHelper(this)
         val dao = UserDatabase.getDatabase(this).userDao()
         val loginRepository = LoginRepository(FirebaseService(), dao, preferencesHelper)
         loginViewModelFactory = LoginViewModelFactory(loginRepository)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory)[LoginViewModel::class.java]
+
+        mainViewModel.fetchMovieGenre()
+        loginViewModel.getUserData(loginViewModel.getUserEmail()!!)
 
         movie = intent.getParcelableExtra("movie")!!
         binding.movieDetailName.text = movie.title
@@ -75,17 +78,32 @@ class MovieDetailActivity : AppCompatActivity() {
             }
         }
 
-        binding.movieDetailAddWishListButton.setOnClickListener {
-            loginViewModel.getUserEmail()
-                ?.let { it1 -> loginViewModel.addToWishList(it1, movie.id) }
-        }
-
         loginViewModel.errorMessage.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
         mainViewModel.errorMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+
+        loginViewModel.user.observe(this) { user ->
+            if (user.isSuccess) {
+                if (user.getOrNull()?.wish_list?.contains(movie.id) == true) {
+                    binding.movieDetailAddWishListButton.text = resources.getString(R.string.remove_from_wish_list_btn)
+                    binding.movieDetailAddWishListButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.alizarin_crimson))
+                    binding.movieDetailAddWishListButton.setOnClickListener {
+                        loginViewModel.getUserEmail()
+                            ?.let { it1 -> loginViewModel.removeFromWishList(it1, movie.id) }
+                    }
+                } else {
+                    binding.movieDetailAddWishListButton.text = resources.getString(R.string.add_to_wish_list_btn)
+                    binding.movieDetailAddWishListButton.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.elf_green))
+                    binding.movieDetailAddWishListButton.setOnClickListener {
+                        loginViewModel.getUserEmail()
+                            ?.let { it1 -> loginViewModel.addToWishList(it1, movie.id) }
+                    }
+                }
+            }
         }
     }
 
@@ -105,5 +123,7 @@ class MovieDetailActivity : AppCompatActivity() {
         mainViewModel.movieTrailer.removeObservers(this)
         mainViewModel.genreMovies.removeObservers(this)
         loginViewModel.errorMessage.removeObservers(this)
+
+        finish()
     }
 }

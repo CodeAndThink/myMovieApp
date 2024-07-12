@@ -42,6 +42,10 @@ class LoginRepository {
         authServices.updateWishList(email, wishList, callback)
     }
 
+    fun deleteWishListById(email: String, wishList: MutableList<Long>, callback: (Boolean, String?) -> Unit) {
+        authServices.updateWishList(email, wishList, callback)
+    }
+
     fun saveStartTime(time: Long) {
         sharedReferencesHelper.setLong("start_time", time)
     }

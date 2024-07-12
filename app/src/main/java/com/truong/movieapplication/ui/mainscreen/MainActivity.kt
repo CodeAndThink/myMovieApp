@@ -1,6 +1,7 @@
 package com.truong.movieapplication.ui.mainscreen
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var password: String
     private val apiService = ApiClients.dataInstance
     private val repository = MovieRepository(apiService)
+    private val TAG = "MainActivity"
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(repository)
@@ -119,5 +121,28 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.errorMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.fetchPopularMovies()
+        mainViewModel.fetchTopRateMovie()
+        mainViewModel.fetchUpcomingMovie()
+        mainViewModel.fetchNowPlayingMovie()
+        mainViewModel.fetchMovieGenre()
+
+        loginViewModel.getUserData(email)
+        loginViewModel.saveUserEmail(email)
+        loginViewModel.fetchMessages()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop: ")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
     }
 }

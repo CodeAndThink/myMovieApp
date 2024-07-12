@@ -76,12 +76,4 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="message_detail_label">Message</string>
-
-    <string name="base_url">https://api.themoviedb.org/</string>
-    <string name="language">en-US</string>
-    <string name="page">1</string>
-    <string name="include_adult">false</string>
-    <string name="size">w500</string>
-    <string name="image_url">https://image.tmdb.org/t/p/</string>
-    <string name="auth_header">Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmOGE3MTZjYjE1MWVjMTA4MjhlMTIxYTgwMzA1ZjUxZSIsIm5iZiI6MTcxOTgwNDcyNS45MjA1NDksInN1YiI6IjY2ODE0MzU4NWNkMDlkN2ExMjQ3ZGE2OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Wd5q6Lon_vCzRnuQozf-SsF1ZzkCM6x0JvVxdpIQCJ8</string>
 </resources>
