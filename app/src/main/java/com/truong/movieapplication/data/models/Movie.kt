@@ -10,24 +10,28 @@ import androidx.room.PrimaryKey
 data class Movie(
     @PrimaryKey
     val id: Long,
-    @ColumnInfo(name = "title")val title: String ?,
-    @ColumnInfo(name = "genre_ids")val genre_ids: List<Long>? = null,
-    @ColumnInfo(name = "poster_path")val poster_path: String?,
-    @ColumnInfo(name = "overview")val overview: String?,
-    @ColumnInfo(name = "release_date")val release_date: String?,
-    @ColumnInfo(name = "vote_average")val vote_average: Float,
-    @ColumnInfo(name = "vote_count")val vote_count: Long,
-    @ColumnInfo(name = "popularity")val popularity: Float,
-    @ColumnInfo(name = "adult")val adult: Boolean,
-    @ColumnInfo(name = "backdrop_path")val backdrop_path: String?,
-    @ColumnInfo(name = "original_language")val original_language: String?,
-    @ColumnInfo(name = "original_title")val original_title: String?,
-    @ColumnInfo(name = "video")val video: Boolean
+    @ColumnInfo(name = "title") val title: String?,
+    @ColumnInfo(name = "genre_ids") val genre_ids: List<Long>? = null,
+    @ColumnInfo(name = "genres") var genres: List<MovieGenre>? = null,
+    @ColumnInfo(name = "poster_path") val poster_path: String?,
+    @ColumnInfo(name = "overview") val overview: String?,
+    @ColumnInfo(name = "release_date") val release_date: String?,
+    @ColumnInfo(name = "vote_average") val vote_average: Float,
+    @ColumnInfo(name = "vote_count") val vote_count: Long,
+    @ColumnInfo(name = "popularity") val popularity: Float,
+    @ColumnInfo(name = "adult") val adult: Boolean,
+    @ColumnInfo(name = "backdrop_path") val backdrop_path: String?,
+    @ColumnInfo(name = "original_language") val original_language: String?,
+    @ColumnInfo(name = "original_title") val original_title: String?,
+    @ColumnInfo(name = "video") val video: Boolean
 ) : Parcelable {
-    constructor(parcel: Parcel) : this (
+    constructor(parcel: Parcel) : this(
         parcel.readLong(),
         parcel.readString(),
         parcel.createLongArray()?.toList(),
+        mutableListOf<MovieGenre>().apply {
+            parcel.readList(this, MovieGenre::class.java.classLoader)
+        },
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -39,8 +43,7 @@ data class Movie(
         parcel.readString(),
         parcel.readString(),
         parcel.readByte() != 0.toByte()
-    ) {
-    }
+    )
 
     override fun describeContents(): Int {
         return 0
@@ -50,6 +53,7 @@ data class Movie(
         dest.writeLong(id)
         dest.writeString(title)
         dest.writeLongArray(genre_ids?.toLongArray())
+        dest.writeList(genres)
         dest.writeString(poster_path)
         dest.writeString(overview)
         dest.writeString(release_date)
@@ -71,6 +75,5 @@ data class Movie(
         override fun newArray(size: Int): Array<Movie?> {
             return arrayOfNulls(size)
         }
-
     }
 }

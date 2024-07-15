@@ -31,31 +31,12 @@ class WishListComponent : Fragment() {
     private val adapter = TopRateMovieAdapter(emptyList())
     private val TAG = "WishListComponent"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWishListComponentBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart: ")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: ")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause: ")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,13 +53,6 @@ class WishListComponent : Fragment() {
                 .popBackStack()
         }
 
-        loginViewModel.user.observe(viewLifecycleOwner) {
-            val user = it.getOrNull()
-            if (user != null) {
-                mainViewModel.setWishList(user.wish_list!!)
-            }
-        }
-
         binding.movieWishListRecyclerView.adapter = adapter
         binding.movieWishListRecyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
 
@@ -90,15 +64,11 @@ class WishListComponent : Fragment() {
             override fun onClick(position: Int, movie: Movie) {
                 val openMovieDetailIntent = Intent(requireActivity(), MovieDetailActivity::class.java)
                 openMovieDetailIntent.putExtra("movie", movie)
+                Log.d(TAG, "onClick: ${movie}")
                 openMovieDetailIntent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
                 startActivity(openMovieDetailIntent)
             }
         })
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop: ")
     }
 
     companion object {

@@ -2,6 +2,7 @@ package com.truong.movieapplication.ui.mainscreen
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -35,6 +36,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(repository)
     }
+    private val TAG = "MovieDetailActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,16 +50,13 @@ class MovieDetailActivity : AppCompatActivity() {
         loginViewModelFactory = LoginViewModelFactory(loginRepository)
         loginViewModel = ViewModelProvider(this, loginViewModelFactory)[LoginViewModel::class.java]
 
-        mainViewModel.fetchMovieGenre()
-        loginViewModel.getUserData(loginViewModel.getUserEmail()!!)
-
         movie = intent.getParcelableExtra("movie")!!
         binding.movieDetailName.text = movie.title
         binding.movieDetailYear.text = "(${movie.release_date!!.substring(0, 4)})"
         mainViewModel.genreMovies.observe(this) { genres ->
             binding.movieDetailCategories.text = movie.genre_ids?.joinToString(" | ") { genreId ->
                 genres.find { it.id == genreId }?.name ?: ""
-            } ?: ""
+            } ?: movie.genres?.joinToString(" | ") { it.name }
         }
         binding.movieDetailRating.rating = movie.vote_average / 2
         binding.movieDetailContext.text = movie.overview
@@ -105,6 +104,9 @@ class MovieDetailActivity : AppCompatActivity() {
                 }
             }
         }
+
+        mainViewModel.fetchMovieGenre()
+        loginViewModel.getUserData(loginViewModel.getUserEmail()!!)
     }
 
     override fun onPause() {

@@ -2,6 +2,7 @@ package com.truong.truongnq20_androidviewclassic.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class TopRateComponent : Fragment() {
     private lateinit var _binding: FragmentTopRateComponentBinding
     private val binding get() = _binding
     private lateinit var mainViewModel: MainViewModel
+    private val TAG = "TopRateComponent"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +46,11 @@ class TopRateComponent : Fragment() {
             adapter.updateList(movies)
         }
 
-        adapter.setOnClickListener(object :
-            TopRateMovieAdapter.OnClickListener {
+        adapter.setOnClickListener(object : TopRateMovieAdapter.OnClickListener {
             override fun onClick(position: Int, movie: Movie) {
                 val openMovieDetailIntent = Intent(requireActivity(), MovieDetailActivity::class.java)
                 openMovieDetailIntent.putExtra("movie", movie)
+                Log.d(TAG, "onClick: $movie")
                 openMovieDetailIntent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
                 startActivity(openMovieDetailIntent)
             }

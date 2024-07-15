@@ -58,7 +58,11 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
             try {
                 val movieCalls = movieIds.map { movieId ->
                     async {
-                        repository.getMovieDetails(movieId).execute().body()
+                        val response = repository.getMovieDetails(movieId).execute().body()
+                        if (response != null) {
+
+                        }
+                        response
                     }
                 }
                 val movieList = movieCalls.awaitAll().filterNotNull()
@@ -154,7 +158,6 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
             override fun onResponse(call: Call<ListMovieGenre>, response: Response<ListMovieGenre>) {
                 if (response.isSuccessful) {
                     _genreMovies.value = response.body()?.genres
-                    Log.d(TAG, "Genre: ${response.body()?.genres}")
                 } else {
                     _errorMessage.value = "Failed to fetch movie's genre"
                 }

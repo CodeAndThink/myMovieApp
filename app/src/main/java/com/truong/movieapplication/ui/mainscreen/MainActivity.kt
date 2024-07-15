@@ -114,6 +114,14 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.saveUserEmail(email)
         loginViewModel.fetchMessages()
 
+        loginViewModel.user.observe(this) { user ->
+            if (user.isSuccess) {
+                if (user.getOrNull()?.wish_list != null) {
+                    mainViewModel.setWishList(user.getOrNull()?.wish_list!!)
+                }
+            }
+        }
+
         mainViewModel.errorMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }

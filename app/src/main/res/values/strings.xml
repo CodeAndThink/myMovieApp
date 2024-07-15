@@ -76,4 +76,5 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="message_detail_label">Message</string>
+    <string name="remove_from_wish_list_btn">Remove From Wish List</string>
 </resources>
