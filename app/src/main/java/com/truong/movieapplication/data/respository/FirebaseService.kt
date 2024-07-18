@@ -1,5 +1,6 @@
 package com.truong.movieapplication.data.respository
 
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.truong.movieapplication.data.connections.network.AuthServices
@@ -132,11 +133,30 @@ class FirebaseService : AuthServices {
         newPassword: String,
         callback: (Boolean, String?) -> Unit
     ) {
-        TODO("Not yet implemented")
+        val user = auth.currentUser
+        if (user != null) {
+            val credential = EmailAuthProvider.getCredential(user.email!!, oldPassword)
+            user.reauthenticate(credential)
+                .addOnSuccessListener {
+                    user.updatePassword(newPassword)
+                        .addOnSuccessListener {
+                            callback(true, null)
+                        }
+                        .addOnFailureListener { e ->
+                            callback(false, e.message)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    callback(false, e.message)
+                }
+        } else {
+            callback(false, "User not authenticated")
+        }
     }
 
     override fun logout(callback: (Boolean, String?) -> Unit) {
-
+        auth.signOut()
+        callback(true, null)
     }
 
     override suspend fun getMessage(): List<Message> = suspendCancellableCoroutine { continuation ->

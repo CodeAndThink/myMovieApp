@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.fir.declarations.builder.buildScript
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -20,7 +18,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -28,6 +25,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+    testOptions{
+        unitTests{
+            isIncludeAndroidResources = true
         }
     }
     compileOptions {
@@ -57,7 +59,9 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.ui.desktop)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.junit.ktx)
     testImplementation(libs.junit)
+    testImplementation(libs.testng)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
@@ -67,6 +71,8 @@ dependencies {
 
     // Room components
     implementation(libs.androidx.room.runtime)
+    androidTestImplementation(project(":app"))
+    androidTestImplementation(project(":app"))
     kapt(libs.androidx.room.compiler)
 
     //Glide
@@ -86,10 +92,22 @@ dependencies {
     //Dagger
 
     //Test
+    testImplementation (libs.androidx.core.testing)
     testImplementation(libs.mockk.v11311)
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
+    testImplementation (libs.mockito.core)
     testImplementation(libs.androidx.core)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
+    androidTestImplementation (libs.androidx.junit.v121)
+    testImplementation (libs.robolectric)
+    testImplementation (libs.mockwebserver)
+    testImplementation (libs.retrofit.mock)
+    testImplementation (libs.mockito.kotlin)
+    androidTestImplementation (libs.androidx.espresso.core.v361)
+    androidTestImplementation (libs.androidx.espresso.intents)
+    androidTestImplementation (libs.androidx.espresso.contrib)
+    testImplementation (libs.androidx.room.testing)
+    androidTestImplementation (libs.hamcrest.library)
 }

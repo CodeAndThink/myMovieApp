@@ -58,11 +58,7 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
             try {
                 val movieCalls = movieIds.map { movieId ->
                     async {
-                        val response = repository.getMovieDetails(movieId).execute().body()
-                        if (response != null) {
-
-                        }
-                        response
+                        repository.getMovieDetails(movieId).execute().body()
                     }
                 }
                 val movieList = movieCalls.awaitAll().filterNotNull()

@@ -5,8 +5,10 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "movies")
+@Parcelize
 data class Movie(
     @PrimaryKey
     val id: Long,
