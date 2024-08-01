@@ -17,19 +17,27 @@
 
         <activity
             android:name=".ui.mainscreen.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".ui.mainscreen.MovieDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".ui.mainscreen.notification.MessageDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN" />

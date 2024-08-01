@@ -8,35 +8,35 @@ import com.truong.movieapplication.data.models.TrailerMovie
 import retrofit2.Call
 
 class MovieRepository(private val movieApiServices: MovieApiServices) {
-    fun getPopularMovies(): Call<MoviePage> {
+    suspend fun getPopularMovies(): MoviePage {
         return movieApiServices.getPopularMovies()
     }
 
-    fun getTopRatedMovies(): Call<MoviePage> {
+    suspend fun getTopRatedMovies(): MoviePage {
         return movieApiServices.getTopRatedMovies()
     }
 
-    fun getUpcomingMovies(): Call<MoviePage> {
+    suspend fun getUpcomingMovies(): MoviePage {
         return movieApiServices.getUpcomingMovies()
     }
 
-    fun getNowPlayingMovies(): Call<MoviePage> {
+    suspend fun getNowPlayingMovies(): MoviePage {
         return movieApiServices.getNowPlayingMovies()
     }
 
-    fun searchMovie(query: String): Call<MoviePage> {
+    suspend fun searchMovie(query: String): MoviePage {
         return movieApiServices.searchMovie(query = query)
     }
 
-    fun getMovieTrailer(movieId: Long): Call<TrailerMovie> {
+    suspend fun getMovieTrailer(movieId: Long): TrailerMovie {
         return movieApiServices.getMovieTrailer(movieId)
     }
 
-    fun getMovieDetails(movieId: Long): Call<Movie> {
+    suspend fun getMovieDetails(movieId: Long): Movie {
         return movieApiServices.getMovieDetails(movieId)
     }
 
-    fun getGenreMovies() : Call<ListMovieGenre> {
+    suspend fun getGenreMovies() : ListMovieGenre {
         return movieApiServices.getGenreMovies()
     }
 }

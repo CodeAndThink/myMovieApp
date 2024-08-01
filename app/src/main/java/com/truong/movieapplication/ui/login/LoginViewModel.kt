@@ -15,6 +15,8 @@ import androidx.lifecycle.viewModelScope
 import com.truong.movieapplication.data.models.Message
 import com.truong.movieapplication.data.models.User
 import com.truong.movieapplication.data.respository.LoginRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -36,15 +38,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    private val _isTimeExceeded = MutableLiveData<Boolean>(false)
+    private val _isTimeExceeded = MutableLiveData(false)
     val isTimeExceeded: LiveData<Boolean> get() = _isTimeExceeded
 
     private val _messages = MutableLiveData<List<Message>>()
     val messages: LiveData<List<Message>> get() = _messages
 
     private var countDownTimer: CountDownTimer? = null
-
-    private val TAG = "LoginViewModel"
 
     fun login(email: String, password: String) {
         loginRepository.login(email, password) { success, user, error ->
@@ -58,7 +58,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     fun fetchMessages() {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val result = loginRepository.getMessage()
             _messages.postValue(result)
         }

@@ -13,65 +13,65 @@ import retrofit2.http.Query
 
 interface MovieApiServices {
     @GET("3/movie/popular")
-    fun getPopularMovies(
+    suspend fun getPopularMovies(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE,
         @Query("page") page: Long = Base.PAGE
-    ): Call<MoviePage>
+    ): MoviePage
 
     @GET("3/movie/top_rated")
-    fun getTopRatedMovies(
+    suspend fun getTopRatedMovies(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE,
         @Query("page") page: Long = Base.PAGE
-    ): Call<MoviePage>
+    ): MoviePage
 
     @GET("3/movie/upcoming")
-    fun getUpcomingMovies(
+    suspend fun getUpcomingMovies(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE,
         @Query("page") page: Long = Base.PAGE
-    ): Call<MoviePage>
+    ): MoviePage
 
     @GET("3/movie/now_playing")
-    fun getNowPlayingMovies(
+    suspend fun getNowPlayingMovies(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE,
         @Query("page") page: Long = Base.PAGE
-    ): Call<MoviePage>
+    ): MoviePage
 
     @GET("3/genre/movie/list")
-    fun getGenreMovies(
+     suspend fun getGenreMovies(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE
-    ): Call<ListMovieGenre>
+    ): ListMovieGenre
 
     @GET("3/movie/{movie_id}")
-    fun getMovieDetails(
+    suspend fun getMovieDetails(
         @Path("movie_id") movieId: Long,
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE,
-    ): Call<Movie>
+    ): Movie
 
     @GET("3/search/movie")
-    fun searchMovie(
+    suspend fun searchMovie(
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("query") query: String,
         @Query("include_adult") adult: String = Base.INCLUDE_ADULT,
         @Query("language") language: String = Base.LANGUAGE,
         @Query("page") page: Long = Base.PAGE
-    ): Call<MoviePage>
+    ): MoviePage
 
     @GET("3/movie/{movie_id}/videos")
-    fun getMovieTrailer(
+    suspend fun getMovieTrailer(
         @Path("movie_id") movieId: Long,
         @Header("Authorization") authHeader: String = Base.AUTH_HEADER,
         @Query("language") language: String = Base.LANGUAGE,
-    ): Call<TrailerMovie>
+    ): TrailerMovie
 
     @GET("{size}/{id_image}")
-    fun getMovieImage(
+    suspend fun getMovieImage(
         @Path("size") size: String = "w500",
         @Path("id_image") idImage: String
-    ): Call<ResponseBody>
+    ): ResponseBody
 }

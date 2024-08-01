@@ -13,10 +13,10 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="LoginActivityTest">
+      <SelectionState runConfigName="MessageAdapterTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LoginActivityTest (1)">
+      <SelectionState runConfigName="Tests in 'com.truong.movieapplication.adapters'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

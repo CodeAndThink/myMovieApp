@@ -1,5 +1,6 @@
 package com.truong.movieapplication.adapters.adapters
 
+import android.content.Intent
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
@@ -70,7 +71,9 @@ class MessageAdapterTest {
 
     @Test
     fun testItemViewClick() {
-        Intents.init()
+        val intent = Intent().apply {
+            putExtra("email", "test@example.com")
+        }
 
         onView(withId(R.id.message_list))
             .perform(RecyclerViewActions.actionOnItemAtPosition<MessageAdapter.MessageViewHolder>(0, click()))

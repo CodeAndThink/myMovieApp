@@ -1,5 +1,6 @@
 package com.truong.movieapplication.ui.mainscreen.profile
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -78,13 +79,18 @@ class ProfileComponent : Fragment() {
                                 .commit()
                         }
                         4 -> {
+                            requireActivity().finishAndRemoveTask()
+
                             val logoutIntent = Intent(requireContext(), LoginActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }
+                            val options = ActivityOptions.makeCustomAnimation(
+                                requireContext(),
+                                R.anim.slide_in_right,
+                                R.anim.slide_out_left
+                            )
 
-                            startActivity(logoutIntent)
-                            activity?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
+                            startActivity(logoutIntent, options.toBundle())
                         }
                     }
                 }

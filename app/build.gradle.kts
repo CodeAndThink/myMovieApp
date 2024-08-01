@@ -90,6 +90,8 @@ dependencies {
     implementation (libs.kotlin.reflect)
 
     //Dagger
+    implementation (libs.dagger.v240)
+    kapt (libs.dagger.compiler.v240)
 
     //Test
     testImplementation (libs.androidx.core.testing)
@@ -101,7 +103,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     androidTestImplementation (libs.androidx.junit.v121)
-    testImplementation (libs.robolectric)
+    testImplementation (libs.robolectric.v49)
     testImplementation (libs.mockwebserver)
     testImplementation (libs.retrofit.mock)
     testImplementation (libs.mockito.kotlin)

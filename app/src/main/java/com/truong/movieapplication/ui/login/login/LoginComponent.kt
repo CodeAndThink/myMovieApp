@@ -65,7 +65,9 @@ class LoginComponent : Fragment() {
             authViewModel.login(binding.inputEmail.text.toString(), binding.inputPassword.text.toString())
             authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
                 if (result) {
-                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
                     intent.putExtra("email", binding.inputEmail.text.toString())
                     intent.putExtra("password", binding.inputPassword.text.toString())
                     startActivity(intent)

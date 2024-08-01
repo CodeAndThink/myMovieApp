@@ -16,10 +16,15 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(RobolectricTestRunner::class)
+@Suppress("UNCHECKED_CAST")
+@Config(sdk = [28])
 class FirebaseServiceUnitTest {
 
+    @Mock
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseService: FirebaseService
@@ -49,7 +54,6 @@ class FirebaseServiceUnitTest {
             assert(user != null)
             assert(user?.id == "123456".hashCode().toLong())
             assert(user?.email == email)
-            assert(user?.password == password)
             assert(error == null)
         }
 

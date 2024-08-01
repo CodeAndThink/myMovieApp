@@ -125,7 +125,5 @@ class MovieDetailActivity : AppCompatActivity() {
         mainViewModel.movieTrailer.removeObservers(this)
         mainViewModel.genreMovies.removeObservers(this)
         loginViewModel.errorMessage.removeObservers(this)
-
-        finish()
     }
 }

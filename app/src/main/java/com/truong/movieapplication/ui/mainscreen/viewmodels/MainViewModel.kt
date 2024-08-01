@@ -1,24 +1,18 @@
 package com.truong.movieapplication.ui.mainscreen.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.truong.movieapplication.data.models.ListMovieGenre
+import androidx.lifecycle.viewModelScope
 import com.truong.movieapplication.data.models.Movie
 import com.truong.movieapplication.data.models.MovieGenre
-import com.truong.movieapplication.data.models.MoviePage
 import com.truong.movieapplication.data.models.TrailerDetail
-import com.truong.movieapplication.data.models.TrailerMovie
 import com.truong.movieapplication.data.respository.MovieRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.withContext
 
 class MainViewModel(private val repository: MovieRepository) : ViewModel() {
     private val _popularMovies = MutableLiveData<List<Movie>>()
@@ -54,130 +48,118 @@ class MainViewModel(private val repository: MovieRepository) : ViewModel() {
     private var TAG = "MainViewModel"
 
     fun setWishList(movieIds: List<Long>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val movieCalls = movieIds.map { movieId ->
-                    async {
-                        repository.getMovieDetails(movieId).execute().body()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    val movieCalls = movieIds.map { movieId ->
+                        async {
+                            repository.getMovieDetails(movieId)
+                        }
                     }
+                    val movieList = movieCalls.awaitAll().filterNotNull()
+                    _wishList.postValue(movieList)
+                } catch (e: Exception) {
+                    _errorMessage.postValue("Failed to fetch movie details: ${e.message}")
                 }
-                val movieList = movieCalls.awaitAll().filterNotNull()
-                _wishList.postValue(movieList)
-            } catch (e: Exception) {
-                _errorMessage.postValue("Failed to fetch movie details: ${e.message}")
             }
         }
     }
 
     fun fetchPopularMovies() {
-        repository.getPopularMovies().enqueue(object : Callback<MoviePage> {
-            override fun onResponse(call: Call<MoviePage>, response: Response<MoviePage>) {
-                if (response.isSuccessful) {
-                    _popularMovies.value = response.body()?.results
-                } else {
-                    _errorMessage.value = "Failed to fetch popular movies"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.getPopularMovies().results
                 }
-            }
 
-            override fun onFailure(call: Call<MoviePage>, t: Throwable) {
-                _errorMessage.value = t.message
+                _popularMovies.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to fetch popular movies: ${e.message}")
             }
-        })
+        }
     }
 
     fun fetchTopRateMovie() {
-        repository.getTopRatedMovies().enqueue(object : Callback<MoviePage> {
-            override fun onResponse(call: Call<MoviePage>, response: Response<MoviePage>) {
-                if (response.isSuccessful) {
-                    _topRatedMovies.value = response.body()?.results
-                } else {
-                    _errorMessage.value = "Failed to fetch popular movies"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.getTopRatedMovies().results
                 }
-            }
 
-            override fun onFailure(call: Call<MoviePage>, t: Throwable) {
-                _errorMessage.value = t.message
+                _topRatedMovies.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to fetch top rated movies: ${e.message}")
             }
-        })
+        }
     }
 
     fun fetchUpcomingMovie() {
-        repository.getUpcomingMovies().enqueue(object : Callback<MoviePage> {
-            override fun onResponse(call: Call<MoviePage>, response: Response<MoviePage>) {
-                if (response.isSuccessful) {
-                    _upcomingMovies.value = response.body()?.results
-                } else {
-                    _errorMessage.value = "Failed to fetch popular movies"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.getUpcomingMovies().results
                 }
-            }
 
-            override fun onFailure(call: Call<MoviePage>, t: Throwable) {
-                _errorMessage.value = t.message
+                _upcomingMovies.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to fetch upcoming movies: ${e.message}")
             }
-        })
+        }
     }
 
     fun fetchNowPlayingMovie() {
-        repository.getNowPlayingMovies().enqueue(object : Callback<MoviePage> {
-            override fun onResponse(call: Call<MoviePage>, response: Response<MoviePage>) {
-                if (response.isSuccessful) {
-                    _nowPlayingMovies.value = response.body()?.results
-                } else {
-                    _errorMessage.value = "Failed to fetch popular movies"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.getNowPlayingMovies().results
                 }
-            }
 
-            override fun onFailure(call: Call<MoviePage>, t: Throwable) {
-                _errorMessage.value = t.message
+                _nowPlayingMovies.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to fetch now playing movies: ${e.message}")
             }
-        })
+        }
     }
 
     fun fetchTrailerMovie(id: Long) {
-        repository.getMovieTrailer(id).enqueue(object : Callback<TrailerMovie> {
-            override fun onResponse(call: Call<TrailerMovie>, response: Response<TrailerMovie>) {
-                if (response.isSuccessful) {
-                    _movieTrailer.value = response.body()?.results
-                } else {
-                    _errorMessage.value = "Failed to fetch movie's trailer"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.getMovieTrailer(id).results
                 }
-            }
 
-            override fun onFailure(call: Call<TrailerMovie>, t: Throwable) {
-                _errorMessage.value = t.message
+                _movieTrailer.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to fetch popular movies: ${e.message}")
             }
-        })
+        }
     }
 
     fun fetchMovieGenre() {
-        repository.getGenreMovies().enqueue(object : Callback<ListMovieGenre> {
-            override fun onResponse(call: Call<ListMovieGenre>, response: Response<ListMovieGenre>) {
-                if (response.isSuccessful) {
-                    _genreMovies.value = response.body()?.genres
-                } else {
-                    _errorMessage.value = "Failed to fetch movie's genre"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.getGenreMovies().genres
                 }
-            }
 
-            override fun onFailure(call: Call<ListMovieGenre>, t: Throwable) {
-                _errorMessage.value = t.message
+                _genreMovies.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to fetch movie's genre: ${e.message}")
             }
-        })
+        }
     }
 
     fun searchMovies(input: String) {
-        repository.searchMovie(input).enqueue(object : Callback<MoviePage> {
-            override fun onResponse(call: Call<MoviePage>, response: Response<MoviePage>) {
-                if (response.isSuccessful) {
-                    _searchResult.value = response.body()?.results
-                } else {
-                    _errorMessage.value = "Failed to search movies"
+        viewModelScope.launch {
+            try {
+                val movieResults = withContext(Dispatchers.IO) {
+                    repository.searchMovie(input).results
                 }
-            }
 
-            override fun onFailure(call: Call<MoviePage>, t: Throwable) {
-                _errorMessage.value = t.message
+                _searchResult.postValue(movieResults)
+            } catch (e: Exception) {
+                _errorMessage.postValue("Failed to search movies: ${e.message}")
             }
-        })
+        }
     }
 }

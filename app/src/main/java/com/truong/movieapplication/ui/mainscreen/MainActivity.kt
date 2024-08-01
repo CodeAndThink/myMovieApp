@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.truong.movieapplication.R
 import com.truong.movieapplication.data.connections.local.UserDatabase
 import com.truong.movieapplication.data.connections.network.ApiClients
@@ -23,12 +24,13 @@ import com.truong.movieapplication.ui.mainscreen.profile.ProfileComponent
 import com.truong.movieapplication.ui.mainscreen.search.SearchComponent
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModel
 import com.truong.movieapplication.ui.mainscreen.viewmodels.MainViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
     private val binding get() = _binding
     private lateinit var email: String
-    private lateinit var password: String
     private val apiService = ApiClients.dataInstance
     private val repository = MovieRepository(apiService)
     private val TAG = "MainActivity"
@@ -54,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getStringExtra("email") != null && intent.getStringExtra("password") != null) {
             email = intent.getStringExtra("email")!!
-            password = intent.getStringExtra("password")!!
         }
 
         if (savedInstanceState == null) {
@@ -121,6 +122,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        /*lifecycleScope.launch {
+            loginViewModel.user.collectLatest { user ->
+                if (user.isSuccess) {
+                    if (user.getOrNull()?.wish_list != null) {
+                        mainViewModel.setWishList(user.getOrNull()?.wish_list!!)
+                    }
+                }
+            }
+        }*/
 
         mainViewModel.errorMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
